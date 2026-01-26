@@ -4,8 +4,63 @@
   <meta charset="UTF-8">
   <title>Banking Interface</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+    }
+
+    .bank-container {
+      width: 300px;
+      margin: 80px auto;
+      padding: 15px;
+      background: white;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    }
+
+    .balance-box {
+      background: #eee;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      margin-top: 10px;
+      padding: 6px;
+      font-size: 16px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    button {
+      width: 48%;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #deposit {
+      background: green;
+    }
+
+    #withdraw {
+      background: red;
+    }
+  </style>
 </head>
+
 <body>
 
   <div class="bank-container">
@@ -22,11 +77,34 @@
       <button id="deposit">Deposit</button>
       <button id="withdraw">Withdraw</button>
     </div>
-
-    
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    let balance = 5000;
+
+    const bal = document.getElementById("balance");
+    const amt = document.getElementById("amount");
+
+    document.getElementById("deposit").onclick = () => {
+      let a = Number(amt.value);
+
+      if (a > 0) {
+        balance += a;
+        bal.innerText = balance;
+        amt.value = "";
+      }
+    };
+
+    document.getElementById("withdraw").onclick = () => {
+      let a = Number(amt.value);
+
+      if (a > 0 && a <= balance) {
+        balance -= a;
+        bal.innerText = balance;
+        amt.value = "";
+      }
+    };
+  </script>
+
 </body>
 </html>
-
