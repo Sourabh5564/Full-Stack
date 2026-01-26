@@ -1,47 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Student Registration Form</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Banking Interface</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header>
-    <h1>Student Registration</h1>
-</header>
 
-<main>
-    <form>
-        <!-- Name -->
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name"
-               required
-               pattern="[A-Za-z ]{3,}"
-               placeholder="Enter your full name">
+  <div class="bank-container">
+    <h1>My Bank</h1>
 
-        <!-- Email -->
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email"
-               required
-               placeholder="example@gmail.com">
+    <div class="balance-box">
+      <p>Current Balance</p>
+      <h2>₹ <span id="balance">5000</span></h2>
+    </div>
 
-        <!-- Age -->
-        <label for="age">Age</label>
-        <input type="number" id="age" name="age"
-               required
-               min="18"
-               max="60"
-               placeholder="Enter your age">
+    <input type="number" id="amount" placeholder="Enter amount">
 
-        <!-- Submit -->
-        <button type="submit">Register</button>
-    </form>
-</main>
+    <div class="buttons">
+      <button id="deposit">Deposit</button>
+      <button id="withdraw">Withdraw</button>
+    </div>
 
-<footer>
-    <p>© 2026 Student Registration System</p>
-</footer>
+    
+  </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
