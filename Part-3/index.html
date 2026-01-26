@@ -4,8 +4,112 @@
   <meta charset="UTF-8">
   <title>Admin Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* Default Light Theme */
+    :root {
+      --bg: #f4f6f8;
+      --text: #000;
+      --card: #fff;
+    }
+
+    /* Dark Theme Variables */
+    .dark {
+      --bg: #1e1e2f;
+      --text: #fff;
+      --card: #2c2c3e;
+    }
+
+    /* Global Styling */
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* CSS Grid Dashboard */
+    .dashboard {
+      display: grid;
+      grid-template-areas:
+        "header header"
+        "sidebar content"
+        "footer footer";
+      grid-template-columns: 220px 1fr;
+      grid-template-rows: 60px 1fr 40px;
+      height: 100vh;
+    }
+
+    /* Grid Areas */
+    .header {
+      grid-area: header;
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 15px;
+      box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .sidebar {
+      grid-area: sidebar;
+      background: var(--card);
+      padding: 15px;
+    }
+
+    .sidebar p {
+      margin: 12px 0;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .sidebar p:hover {
+      background: rgba(0,0,0,0.08);
+    }
+
+    .content {
+      grid-area: content;
+      padding: 20px;
+    }
+
+    .footer {
+      grid-area: footer;
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* Theme Button */
+    #themeToggle {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      background: #007bff;
+      color: white;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-areas:
+          "header"
+          "content"
+          "footer";
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
   <div class="dashboard">
@@ -31,7 +135,30 @@
     </footer>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const toggleBtn = document.getElementById("themeToggle");
+    const body = document.body;
+
+    /* Load saved theme */
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      body.classList.add("dark");
+      toggleBtn.textContent = "☀️ Light Mode";
+    }
+
+    /* Toggle theme */
+    toggleBtn.addEventListener("click", () => {
+      body.classList.toggle("dark");
+
+      if (body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        toggleBtn.textContent = "☀️ Light Mode";
+      } else {
+        localStorage.setItem("theme", "light");
+        toggleBtn.textContent = "🌙 Dark Mode";
+      }
+    });
+  </script>
+
 </body>
 </html>
-
