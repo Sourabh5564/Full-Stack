@@ -4,9 +4,44 @@
     <meta charset="UTF-8">
     <title>Student Registration Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+        }
+
+        form {
+            width: 300px;
+            margin: auto;
+            padding: 30px;
+            background: rgb(255, 20, 20);
+            border-radius: 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 6px;
+            margin-top: 5px;
+        }
+
+        input:invalid {
+            border: 2px solid red;
+        }
+
+        input:valid {
+            border: 2px solid rgb(0, 255, 0);
+        }
+    </style>
 </head>
+
 <body>
+
 <header>
     <h1>Student Registration</h1>
 </header>
@@ -45,4 +80,3 @@
 
 </body>
 </html>
-
