@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Drawing Tool</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        margin: 0;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+    }
+
+    h2 {
+        color: white;
+        margin: 15px;
+    }
+
+    .toolbar {
+        margin-bottom: 10px;
+    }
+
+    button, input[type="color"] {
+        padding: 6px 10px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button {
+        background: #ff6b6b;
+        color: white;
+    }
+
+    button:hover {
+        background: #ff4d4d;
+    }
+
+    svg {
+        background: white;
+        width: 90vw;
+        height: 70vh;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        touch-action: none;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Interactive SVG Drawing Tool</h2>
+
+<div class="toolbar">
+    <input type="color" id="colorPicker" value="#000000">
+    <button id="undoBtn">Undo</button>
+    <button id="clearBtn">Clear</button>
+</div>
+
+<svg id="canvas"></svg>
+
+<script>
+const svg = document.getElementById("canvas");
+const colorPicker = document.getElementById("colorPicker");
+const undoBtn = document.getElementById("undoBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+let isDrawing = false;
+let startX, startY;
+let currentRect = null;
+
+svg.addEventListener("mousedown", (e) => {
+    isDrawing = true;
+
+    const rect = svg.getBoundingClientRect();
+    startX = e.clientX - rect.left;
+    startY = e.clientY - rect.top;
+
+    currentRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    currentRect.setAttribute("x", startX);
+    currentRect.setAttribute("y", startY);
+    currentRect.setAttribute("width", 0);
+    currentRect.setAttribute("height", 0);
+    currentRect.setAttribute("fill", colorPicker.value);
+    currentRect.setAttribute("opacity", 0.6);
+
+    svg.appendChild(currentRect);
+});
+
+svg.addEventListener("mousemove", (e) => {
+    if (!isDrawing) return;
+
+    const rect = svg.getBoundingClientRect();
+    const currentX = e.clientX - rect.left;
+    const currentY = e.clientY - rect.top;
+
+    const width = currentX - startX;
+    const height = currentY - startY;
+
+    currentRect.setAttribute("width", Math.abs(width));
+    currentRect.setAttribute("height", Math.abs(height));
+
+    currentRect.setAttribute("x", width < 0 ? currentX : startX);
+    currentRect.setAttribute("y", height < 0 ? currentY : startY);
+});
+
+svg.addEventListener("mouseup", () => {
+    isDrawing = false;
+});
+
+svg.addEventListener("mouseleave", () => {
+    isDrawing = false;
+});
+
+undoBtn.addEventListener("click", () => {
+    if (svg.lastChild) {
+        svg.removeChild(svg.lastChild);
+    }
+});
+
+clearBtn.addEventListener("click", () => {
+    svg.innerHTML = "";
+});
+</script>
+
+</body>
+</html>
