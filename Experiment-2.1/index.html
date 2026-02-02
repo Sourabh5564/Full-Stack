@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Character Counter</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      width: 400px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: scale(1.02);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      text-align: center;
+      color: #333;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      resize: none;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    textarea:focus {
+      border-color: #667eea;
+    }
+
+    .counter {
+      margin-top: 10px;
+      text-align: right;
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+
+    .warning {
+      color: red;
+      font-weight: bold;
+    }
+
+    .normal {
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>Live Character Counter</h2>
+    <textarea id="textInput" maxlength="1500" placeholder="Start typing..."></textarea>
+    <div id="counter" class="counter normal">0 / 1500</div>
+  </div>
+
+  <script>
+    const textarea = document.getElementById("textInput");
+    const counter = document.getElementById("counter");
+    const MAX_LIMIT = 1500;
+
+    textarea.addEventListener("input", () => {
+      const currentLength = textarea.value.length;
+      counter.textContent = currentLength + " / " + MAX_LIMIT;
+
+      if (currentLength >= MAX_LIMIT) {
+        counter.classList.remove("normal");
+        counter.classList.add("warning");
+      } else {
+        counter.classList.remove("warning");
+        counter.classList.add("normal");
+      }
+    });
+  </script>
+
+</body>
+</html>
 
