@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Product Filter</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #4e73df, #1cc88a);
+        padding: 30px;
+    }
+
+    h2 {
+        text-align: center;
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .controls {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    select {
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        transition: all 0.4s ease-in-out;
+    }
+
+    .card {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .price {
+        color: #1cc88a;
+        font-weight: bold;
+        margin-top: 8px;
+    }
+
+    .category {
+        font-size: 12px;
+        color: gray;
+        margin-top: 5px;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Dynamic Product Filter</h2>
+
+<div class="controls">
+    <select id="sortOption">
+        <option value="default">Sort By</option>
+        <option value="low-high">Price: Low to High</option>
+        <option value="high-low">Price: High to Low</option>
+        <option value="name">Name (A-Z)</option>
+    </select>
+</div>
+
+<div class="product-grid" id="productGrid"></div>
+
+<script>
+    const products = [
+        { name: "Laptop", price: 60000, category: "Electronics" },
+        { name: "Headphones", price: 2000, category: "Accessories" },
+        { name: "Smartphone", price: 30000, category: "Electronics" },
+        { name: "Shoes", price: 2500, category: "Fashion" },
+        { name: "Watch", price: 5000, category: "Accessories" },
+        { name: "Backpack", price: 1500, category: "Fashion" }
+    ];
+
+    const grid = document.getElementById("productGrid");
+    const sortOption = document.getElementById("sortOption");
+
+    function displayProducts(items) {
+        grid.innerHTML = "";
+        items.forEach(product => {
+            const card = document.createElement("div");
+            card.classList.add("card");
+            card.innerHTML = `
+                <h4>${product.name}</h4>
+                <div class="price">₹${product.price}</div>
+                <div class="category">${product.category}</div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function sortProducts(option) {
+        let sorted = [...products];
+
+        if (option === "low-high") {
+            sorted.sort((a, b) => a.price - b.price);
+        } 
+        else if (option === "high-low") {
+            sorted.sort((a, b) => b.price - a.price);
+        } 
+        else if (option === "name") {
+            sorted.sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        displayProducts(sorted);
+    }
+
+    sortOption.addEventListener("change", (e) => {
+        sortProducts(e.target.value);
+    });
+
+    displayProducts(products);
+</script>
+
+</body>
+</html>
